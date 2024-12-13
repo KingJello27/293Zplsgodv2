@@ -4,7 +4,7 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-2, -14, -18},     // Left Chassis Ports (negative port will reverse it!)
+    {-6, -14, -18},     // Left Chassis Ports (negative port will reverse it!)
     {12, 15, 9},  // Right Chassis Ports (negative port will reverse it!)
 
     1,      // IMU Port
