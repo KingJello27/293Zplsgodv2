@@ -1,12 +1,24 @@
+#include "ladybrown.hpp"
 #include "main.h"
 #include "EZ-Template/drive/drive.hpp"
 #include "globals.hpp"
+#include "colorSort.hpp"
 
 void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
+
+  ladyBrownInit();
+
+  manual = false;
+
+  colorSortInit();
+
+  pros::Task ladyBrownTask(asyncController);
+  pros::Task colorSortTask(colorSortAsyncController);
+
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);  // Enables modifying the controller curve with buttons on the joysticks

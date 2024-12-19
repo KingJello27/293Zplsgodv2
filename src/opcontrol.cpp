@@ -1,6 +1,7 @@
 #include "main.h"
 #include "globals.hpp"
 #include "ladybrown.hpp"
+#include "pros/misc.h"
 
 
 void opcontrol() {
@@ -17,6 +18,8 @@ void opcontrol() {
     doinker.set_value(doinkerState);
 
     bool shift = false;
+
+    ladyBrownInit();
 
 
   while (true) {
@@ -58,48 +61,48 @@ void opcontrol() {
         }
 
         //Shift Toggle
-        if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
-            shift = !shift;
-        }
+        // if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
+        //     shift = !shift;
+        // }
 
         //Intake Control
         if (shift == false){
             if (controller.get_digital(DIGITAL_R2)){
-                hookIntake.move_voltage(-10000);
-                rollerIntake.move_voltage(-10000);
+                intake.move_voltage(-12000);
             }else if (controller.get_digital(DIGITAL_R1)){
-                hookIntake.move_voltage(10000);
-                rollerIntake.move_voltage(10000);
+               intake.move_voltage(12000);
             }else{
-                hookIntake.move_voltage(0);
-                rollerIntake.move_voltage(0);
+                intake.move_voltage(0);
             }
         }
 
-        //Lady Brown Manual Control
-        if (shift == true){
-            if (controller.get_digital(DIGITAL_R2)){
-                ladyBrown.move_voltage(-10000);
-            }else if (controller.get_digital(DIGITAL_R1)){
-                ladyBrown.move_voltage(10000);
-            }else{
-                ladyBrown.move_voltage(0);
-            }
-        }
 
-        //Lady Brown Macro Control
+        //Lady Brown
+        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+            manual = false;
+        }
+        
         if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
             if (counter == 0) {
-                setPosition(18);
+                setPosition(1950);
             }
             else if (counter == 1) {
-                setPosition(120);
+                setPosition(13000);
+                waitUntilSettled();
+                manual = true;
             }
             else if (counter == 2) {
                 setPosition(0);
             }
             counter ++;
             counter = counter % 3;
+        }
+
+        if (manual == true){
+            if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+                ladyBrown.move_voltage(12000);
+                intake.move_voltage(0);
+            }
         }
 
 //         //Color Sorter

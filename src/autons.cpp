@@ -1,5 +1,7 @@
+#include "ladybrown.hpp"
 #include "main.h"
 #include "globals.hpp"
+#include "colorSort.hpp"
 
 
 void autonomous() {
@@ -14,45 +16,158 @@ void autonomous() {
 
 void redLeftAWP(){
 
-}
+  colorIndex = 1;
+  
+  //score on alliance goal
+  chassis.pid_drive_set(1,90);
+  chassis.pid_wait();
+  chassis.pid_turn_set(41,90);
+  chassis.pid_wait();
+  setPosition(17000);
+  pros::delay(750);
+
+  //grab mobile goal
+  chassis.pid_drive_set(-4,90);
+  chassis.pid_wait();
+  setPosition(-1950);
+  pros::delay(250);
+  chassis.pid_turn_set(70,90);
+  chassis.pid_wait();
+  tilter.set_value(false);
+  chassis.pid_drive_set(-36,90);
+  chassis.pid_wait();
+  pros::delay(100);
+  tilter.set_value(true);
+  pros::delay(500);
+
+  //score first ring
+  intake.move_voltage(12000);
+  chassis.pid_turn_set(180,90);
+  chassis.pid_wait();
+  chassis.pid_drive_set(26,90);
+  chassis.pid_wait();
+  pros::delay(500);
+
+  //score other two rings
+  chassis.pid_turn_set(-95,90);
+  chassis.pid_wait();
+  chassis.pid_drive_set(14,90);
+  chassis.pid_wait();
+  chassis.pid_turn_set(-40,90);
+  chassis.pid_wait();
+  chassis.pid_drive_set(15,90);
+  chassis.pid_wait();
+ 
+  //touch the pole
+  chassis.pid_turn_set(13,90);
+  chassis.pid_wait();
+  chassis.pid_drive_set(10,90);
+  chassis.pid_wait();
+  intake.move_voltage(0);
+
+
+}  
 
 
 void redRightAWP(){
+
+  colorIndex = 1;
   
 }
 
 
 void blueLeftAWP(){
+
+  colorIndex = 0;
   
 }
 
 
 void blueRightAWP(){
+
+  colorIndex = 0;
   
+  //score on alliance goal
+  chassis.pid_drive_set(1,90);
+  chassis.pid_wait();
+  chassis.pid_turn_set(-41,90);
+  chassis.pid_wait();
+  setPosition(17000);
+  pros::delay(750);
+
+  //grab mobile goal
+  chassis.pid_drive_set(-4,90);
+  chassis.pid_wait();
+  setPosition(-1950);
+  pros::delay(250);
+  chassis.pid_turn_set(-70,90);
+  chassis.pid_wait();
+  tilter.set_value(false);
+  chassis.pid_drive_set(-36,90);
+  chassis.pid_wait();
+  pros::delay(100);
+  tilter.set_value(true);
+  pros::delay(500);
+
+  //score first ring
+  intake.move_voltage(12000);
+  chassis.pid_turn_set(-180,90);
+  chassis.pid_wait();
+  chassis.pid_drive_set(26,90);
+  chassis.pid_wait();
+  pros::delay(750);
+
+  //score other two rings
+  chassis.pid_turn_set(95,90);
+  chassis.pid_wait();
+  chassis.pid_drive_set(7,90);
+  chassis.pid_wait();
+  chassis.pid_turn_set(40,90);
+  chassis.pid_wait();
+  chassis.pid_drive_set(8,90);
+  chassis.pid_wait();
+
+  //touch the pole
+  chassis.pid_turn_set(-13,90);
+  chassis.pid_wait();
+  chassis.pid_drive_set(10,90);
+  chassis.pid_wait();
+  intake.move_voltage(0);
+
 }
 
 
 void redLeftElim(){
+
+  colorIndex = 1;
   
 }
 
 
 void redRightElim(){
+
+  colorIndex = 1;
   
 }
 
 
 void blueLeftElim(){
+
+  colorIndex = 0;
   
 }
 
 
 void blueRightElim(){
+
+  colorIndex = 0;
   
 }
 
 
 void skills(){
+
+  colorIndex = 1;
   
 }
 

@@ -2,20 +2,19 @@
 #include "EZ-Template/drive/drive.hpp"
 
 // Chassis constructor
-ez::Drive chassis(
+    ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-6, -14, -18},     // Left Chassis Ports (negative port will reverse it!)
+    {-7, -14, -18},     // Left Chassis Ports (negative port will reverse it!)
     {12, 15, 9},  // Right Chassis Ports (negative port will reverse it!)
 
-    1,      // IMU Port
-    4.125,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+    17,      // IMU Port
+    3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+    600,    // Cartridge RPM
 
-    // External Gear Ratio (MUST BE DECIMAL) This is WHEEL GEAR / SENSOR GEAR
-    // eg. if your drive is 84:36 where the 36t is sensored, your RATIO would be 84/36 which is 2.333
-    // eg. if your drive is 36:60 where the 60t is sensored, your RATIO would be 36/60 which is 0.6
-    1,
-
-    16);  // Left Rotation Port (negative port will reverse it!)
+    // External Gear Ratio (MUST BE DECIMAL) This is WHEEL GEAR / MOTOR GEAR
+    // eg. if your drive is 84:36 where the 36t is powered, your RATIO would be 84/36 which is 2.333
+    // eg. if your drive is 36:60 where the 60t is powered, your RATIO would be 36/60 which is 0.6
+    1.33);
 
 //controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
@@ -31,8 +30,10 @@ pros::Rotation vertical_encoder(16);
 pros::Rotation horizontal_encoder(19);
 
 //Motors
-pros::Motor hookIntake(13, pros::MotorGearset::blue);
-pros::Motor rollerIntake(10, pros::MotorGearset::blue);
+pros::Motor hookIntake(-13, pros::MotorGearset::blue);
+pros::Motor rollerIntake(-10, pros::MotorGearset::blue);
+
+pros::MotorGroup intake({-13,-10}, pros::MotorGears::blue);
 
 //pneumatics
 pros::adi::DigitalOut tilter('A');
@@ -40,7 +41,7 @@ pros::adi::DigitalOut doinker('B');
 // pros::adi::DigitalOut colorPicker('D');
 
 //IMU
-pros::Imu imu(1);
+pros::Imu imu(17);
 
 // PID Constants
 void default_constants() {
