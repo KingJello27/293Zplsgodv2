@@ -14,7 +14,7 @@ extern void colorSortInit();
 extern void blueSideDetection(), redSideDetection();
 
 //Async Function
-extern void colorSortAsyncController();
+extern void colorSortAsyncController(void * param);
 
 //Color Index
 extern int colorIndex;
